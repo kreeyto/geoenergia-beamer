@@ -77,10 +77,12 @@
 		\newcommand{\depttext}{Departamento de Engenharia de Petróleo \\%
 			Universidade do Estado de Santa Catarina \\%
 			Balneário Camboriú, Brasil}%
+		\usepackage[brazil]{babel}
 	}{%
 		\newcommand{\depttext}{Department of Petroleum Engineering \\%
 			Santa Catarina State University (UDESC) \\%
 			Balneário Camboriú, Brazil}%
+		\usepackage[english]{babel}
 	}%
 }
 
@@ -88,7 +90,7 @@
 	\begin{tikzpicture}[remember picture, overlay]
 		\fill[\footlinecolor] (current page.south west) rectangle ++(\paperwidth, 0.75cm);
 		\node[anchor=south west,yshift=0.03cm,xshift=0.25cm] at (current page.south west) {\includegraphics[height=0.5cm]{udescfoot.png}};
-		\node[align=center,font=\scriptsize,white] at ([xshift=1cm,yshift=0.345cm]current page.south) {\presentername. \presentationfootline};
+		\node[align=center,font=\scriptsize,white] at ([xshift=1cm,yshift=0.33cm]current page.south) {\presentername. \presentationfootline};
 		\node[anchor=south east,font=\scriptsize,white] 
 		at ([xshift=-0.3cm,yshift=0.18cm]current page.south east) 
 		{\insertframenumber};
@@ -110,6 +112,7 @@
 % --- contador e armazenamento das referências ---
 \makeatletter
 \newcounter{refcount}
+\newcounter{refstart}
 \gdef\refentries{}
 
 \NewDocumentCommand{\reference}{m}{
@@ -121,7 +124,8 @@
 
 \let\oldframe\frame
 \renewenvironment{frame}{
-	\gdef\refentries{} % limpa ao iniciar cada frame
+	\setcounter{refstart}{\numexpr\value{refcount}+1\relax} % marca início real
+	\gdef\refentries{}
 	\oldframe
 }{\endframe}
 \makeatother
@@ -131,7 +135,7 @@
 		\node[anchor=south west] at ([xshift=0.45cm,yshift=0.73cm]current page.south west) {
 			\scriptsize
 			\begin{minipage}{\textwidth}
-				\begin{enumerate}[label=$^\arabic*$]
+				\begin{enumerate}[label=$^\arabic*$,start=\value{refstart}]
 					\refentries
 				\end{enumerate}
 			\end{minipage}
@@ -180,7 +184,7 @@
 			\fill[mainfill] ([yshift={-2.69cm}]current page.west)
 			rectangle ++({(\hptrem/2-0.023)*\paperwidth},4.22cm);
 			\fill[mainfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=2.11cm];
-			\fill[secfill]   ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=1.85cm];
+			\fill[secfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=1.85cm];
 			
 			% logos e departamento
 			\node[anchor=east,scale=0.97] at ([xshift=0cm, yshift=3cm]current page.east) {
