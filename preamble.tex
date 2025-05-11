@@ -88,7 +88,7 @@
 	\begin{tikzpicture}[remember picture, overlay]
 		\fill[\footlinecolor] (current page.south west) rectangle ++(\paperwidth, 0.75cm);
 		\node[anchor=south west,yshift=0.03cm,xshift=0.25cm] at (current page.south west) {\includegraphics[height=0.5cm]{udescfoot.png}};
-		\node[align=center,font=\scriptsize,white] at ([xshift=-0.25cm,yshift=0.345cm]current page.south) {B. V. Gemelgo. Título da Apresentação};
+		\node[align=center,font=\scriptsize,white] at ([xshift=1cm,yshift=0.345cm]current page.south) {\presentername. \presentationfootline};
 		\node[anchor=south east,font=\scriptsize,white] 
 		at ([xshift=-0.3cm,yshift=0.18cm]current page.south east) 
 		{\insertframenumber};
@@ -150,10 +150,14 @@
 \newcommand{\presentationtitle}{}
 \newcommand{\presentationauthor}{}
 \newcommand{\presentationdate}{}
+\newcommand{\presentername}{}
+\newcommand{\presentationfootline}{}
 
 \newcommand{\setpresentationtitle}[1]{\renewcommand{\presentationtitle}{#1}}
 \newcommand{\setpresentationauthor}[1]{\renewcommand{\presentationauthor}{#1}}
 \newcommand{\setpresentationdate}[1]{\renewcommand{\presentationdate}{#1}}
+\newcommand{\setpresentername}[1]{\renewcommand{\presentername}{#1}}
+\newcommand{\setpresentationfootline}[1]{\renewcommand{\presentationfootline}{#1}}
 
 \newcommand{\maketitleframe}{
 	\begin{frame}[plain]
