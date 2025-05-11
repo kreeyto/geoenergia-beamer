@@ -1,0 +1,202 @@
+\setbeamertemplate{navigation symbols}{}
+\pgfmathsetmacro{\vptrem}{0.3}
+\pgfmathsetmacro{\vpttil}{1-\vptrem}
+\pgfmathsetmacro{\hptrem}{0.31}
+\pgfmathsetmacro{\hpttil}{1-\hptrem}
+\pgfmathsetmacro{\raio}{\hptrem/2*\paperwidth}
+\pgfmathsetmacro{\adjust}{0.023}
+\pgfmathsetmacro{\wrect}{(\hptrem/2-\adjust)*\paperwidth}
+\pgfmathsetmacro{\hrect}{4.22}
+\pgfmathsetmacro{\cyrect}{-2.69+\hrect/2}
+
+% ---------------------- DEFINIÇÃO DE TEMA ------------------
+
+\newcommand{\definethemeassets}{%
+	
+	\ifcase \themeid
+	\or % == tema 1: verde ==
+	% definicao de cores
+	\definecolor{mainfill}{HTML}{149B55}%
+	\definecolor{secfill}{HTML}{054B28}%
+	% cores texto
+	\newcommand{\bla}{secfill}%
+	\newcommand{\txtdep}{white}%
+	\newcommand{\txttitle}{white}%
+	\newcommand{\txtmisc}{white}%
+	\newcommand{\txtsst}{secfill}%
+	\newcommand{\txtst}{mainfill}%
+	% includes
+	\newcommand{\backgroundfile}{stdbackground.pdf}%
+	\newcommand{\udescfile}{udescwhite.png}%
+	\newcommand{\geofile}{geowhite.png}%
+	% cores footline
+	\newcommand{\footlinecolor}{secfill}%
+	% ===================
+	\or % == tema 2: meio termo ==
+	% definicao de cores
+	\definecolor{mainfill}{HTML}{FFFFFF}%
+	\definecolor{secfill}{HTML}{D1E5D9}%
+	\definecolor{txtgreen}{HTML}{149B55}%
+	\definecolor{txtgray}{HTML}{7F7F7F}%
+	% cores texto
+	\newcommand{\txtdep}{txtgray}%
+	\newcommand{\txttitle}{txtgreen}%
+	\newcommand{\txtmisc}{black}%
+	\newcommand{\txtsst}{txtgray}%
+	\newcommand{\txtst}{txtgreen}%
+	% includes
+	\newcommand{\backgroundfile}{altbackground.pdf}%
+	\newcommand{\udescfile}{udescgray.png}%
+	\newcommand{\geofile}{geogray.png}%
+	% cores footline
+	\newcommand{\footlinecolor}{black}%
+	% ========================
+	\or % == tema 3: branco ==
+	% definicao de cores
+	\definecolor{mainfill}{HTML}{FFFFFF}%
+	\definecolor{secfill}{HTML}{A6A6A6}%
+	\definecolor{txtgray}{HTML}{7F7F7F}%
+	% cores texto
+	\newcommand{\txtdep}{txtgray}%
+	\newcommand{\txttitle}{black}%
+	\newcommand{\txtmisc}{black}%
+	\newcommand{\txtsst}{txtgray}%
+	\newcommand{\txtst}{black}%
+	% includes
+	\newcommand{\backgroundfile}{stdbackground.pdf}%
+	\newcommand{\udescfile}{udescgray.png}%
+	\newcommand{\geofile}{geogray.png}%
+	% cores footline
+	\newcommand{\footlinecolor}{black}%
+	% ====================
+	\fi
+}
+
+\newcommand{\setdepttext}{%
+	\ifthenelse{\equal{\langid}{pt}}{%
+		\newcommand{\depttext}{Departamento de Engenharia de Petróleo \\%
+			Universidade do Estado de Santa Catarina \\%
+			Balneário Camboriú, Brasil}%
+	}{%
+		\newcommand{\depttext}{Department of Petroleum Engineering \\%
+			Santa Catarina State University (UDESC) \\%
+			Balneário Camboriú, Brazil}%
+	}%
+}
+
+\setbeamertemplate{footline}{
+	\begin{tikzpicture}[remember picture, overlay]
+		\fill[\footlinecolor] (current page.south west) rectangle ++(\paperwidth, 0.75cm);
+		\node[anchor=south west,yshift=0.03cm,xshift=0.25cm] at (current page.south west) {\includegraphics[height=0.5cm]{udescfoot.png}};
+		\node[align=center,font=\scriptsize,white] at ([xshift=-0.25cm,yshift=0.345cm]current page.south) {B. V. Gemelgo. Título da Apresentação};
+		\node[anchor=south east,font=\scriptsize,white] 
+		at ([xshift=-0.3cm,yshift=0.18cm]current page.south east) 
+		{\insertframenumber};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\sobretitulo}[1]{%
+	{\scriptsize\bfseries\textcolor{\txtsst}{\MakeUppercase{#1}}}\\[0.5em]
+}
+
+\newcommand{\titulo}[1]{%
+	{\huge\bfseries\textcolor{\txtst}{#1}}\\[1.5em]
+}
+
+\definethemeassets
+\setdepttext
+
+% --- contador e armazenamento das referências ---
+\makeatletter
+\newcounter{refcount}
+\gdef\refentries{}
+
+\NewDocumentCommand{\reference}{m}{
+	\hspace{-0.075cm}\stepcounter{refcount}%
+	\edef\tempcounter{\number\value{refcount}}%
+	\g@addto@macro\refentries{\item\hspace{-0.1cm}#1}%
+	$^\tempcounter$%
+}
+
+\let\oldframe\frame
+\renewenvironment{frame}{
+	\gdef\refentries{} % limpa ao iniciar cada frame
+	\oldframe
+}{\endframe}
+\makeatother
+
+\newcommand{\printreferences}{
+	\begin{tikzpicture}[remember picture, overlay]
+		\node[anchor=south west] at ([xshift=0.45cm,yshift=0.73cm]current page.south west) {
+			\scriptsize
+			\begin{minipage}{\textwidth}
+				\begin{enumerate}[label=$^\arabic*$]
+					\refentries
+				\end{enumerate}
+			\end{minipage}
+		};
+	\end{tikzpicture}
+}
+
+\newcommand{\conteudo}[1]{%
+	\begin{minipage}[t][5.8cm][t]{\textwidth}
+		\raggedright
+		#1
+	\end{minipage}%
+	\printreferences
+}
+
+\newcommand{\presentationtitle}{}
+\newcommand{\presentationauthor}{}
+\newcommand{\presentationdate}{}
+
+\newcommand{\setpresentationtitle}[1]{\renewcommand{\presentationtitle}{#1}}
+\newcommand{\setpresentationauthor}[1]{\renewcommand{\presentationauthor}{#1}}
+\newcommand{\setpresentationdate}[1]{\renewcommand{\presentationdate}{#1}}
+
+\newcommand{\maketitleframe}{
+	\begin{frame}[plain]
+		\begin{tikzpicture}[remember picture, overlay]
+			% background
+			\node[anchor=south west, inner sep=0pt] at (current page.south west) {
+				\includegraphics[width=\paperwidth,height=\paperheight]{\backgroundfile}
+			};
+			
+			% shapes e sobreposição
+			\fill[mainfill] ([yshift={\vptrem*\paperheight}]current page.south east)
+			rectangle ++({-\hpttil*\paperwidth}, {\vpttil*\paperheight});
+			\node (init) at ([xshift={\hptrem*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\node (end) at ([xshift={\hptrem/2*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\fill[mainfill] ([yshift={0.2}]init.center)
+			arc[start angle=0,end angle=-90,radius=\raio+7.8pt]
+			-- (current page.south east)
+			-- ([yshift={\vptrem*\paperheight+0.2}]current page.south east) -- cycle;
+			
+			\fill[mainfill] ([yshift={-2.69cm}]current page.west)
+			rectangle ++({(\hptrem/2-0.023)*\paperwidth},4.22cm);
+			\fill[mainfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=2.11cm];
+			\fill[secfill]   ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=1.85cm];
+			
+			% logos e departamento
+			\node[anchor=east,scale=0.97] at ([xshift=0cm, yshift=3cm]current page.east) {
+				\begin{tikzpicture}[remember picture]
+					\node[anchor=west,yshift=-0.05cm] at (-4.15,0) {\includegraphics[width=3.75cm]{\geofile}};
+					\node[anchor=west] at (-1,0) {\includegraphics[width=3cm]{\udescfile}};
+					\node[anchor=west,align=left,scale=0.66,text width=8cm,text=\txtdep,font=\bfseries,yshift=-0.05cm] at (2.25, 0) {\depttext};
+				\end{tikzpicture}
+			};
+			
+			% título, autor e data
+			\node[anchor=east,align=right,text width=0.55\paperwidth] 
+			at ([xshift=-0.5cm, yshift=-1cm]current page.east) {
+				{\fontsize{16pt}{16pt}\bfseries \textcolor{\txttitle}{\presentationtitle}} \\[1.5em]
+				{\fontsize{12pt}{12pt}\bfseries \textcolor{\txtmisc}{\presentationauthor}} \\[1em]
+				{\fontsize{10pt}{10pt}\selectfont \textcolor{\txtmisc}{\presentationdate \\ Geoenergia Lab}}
+			};
+		\end{tikzpicture}
+	\end{frame}
+	\setcounter{framenumber}{0}
+}
+
+

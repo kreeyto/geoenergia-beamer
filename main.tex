@@ -1,0 +1,52 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usefonttheme[onlymath]{serif}
+\usepackage{mfirstuc}
+\usepackage{xparse}
+\usepackage{xstring}
+\usepackage{enumitem}
+
+% ---------------------- SELETORES -------------------------
+\newcommand{\themeid}{1} % 1 = verde, 2 = meio termo, 3 = branco 
+\newcommand{\langid}{en} % 'pt' para português, 'en' para inglês
+% -----------------------------------------------------------
+
+% preambulo
+\input{preamble.tex}
+
+\setpresentationtitle{Modelagem Numérica de Escoamentos Multicomponente via Método de Lattice Boltzmann}
+\setpresentationauthor{Breno Vargas Gemelgo}
+\setpresentationdate{10 de maio de 2025}
+
+\begin{document}
+	
+	\maketitleframe
+	
+	\begin{frame}
+		
+		\sobretitulo{INTRODUÇÃO (maiúsculas são forçadas)}
+		\titulo{Título do slide (minúsculas)}
+		
+		\conteudo{
+			Texto do slide aqui texto do slide aqui texto do slide aqui.
+			
+			Equação:
+			\begin{equation}
+				\rho m_{\alpha\beta}^{(2)} = \sum_i f_i H_{\alpha\beta,i}^{(2)}
+			\end{equation}
+			
+			Building me a home...
+			
+			Thinking I'd be strong there!
+			
+			Referência aqui\reference{Hegele Jr, L. A., et al. \textbf{Physical Review E} 98.4 (2018).} e aqui\reference{Gemelgo, B. V. et al. \textbf{Galactic Review E} 12.3 (2004).}
+		}
+		
+	\end{frame}
+	
+\end{document} 
