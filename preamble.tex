@@ -26,9 +26,10 @@
 	\newcommand{\txtsst}{secfill}%
 	\newcommand{\txtst}{mainfill}%
 	% includes
-	\newcommand{\backgroundfile}{stdbackground.pdf}%
+	\newcommand{\backgroundfile}{stdbackground.png}%
 	\newcommand{\udescfile}{udescwhite.png}%
 	\newcommand{\geofile}{geowhite.png}%
+	\newcommand{\petfile}{petwhite.png}%
 	% cores footline
 	\newcommand{\footlinecolor}{secfill}%
 	% ===================
@@ -45,9 +46,10 @@
 	\newcommand{\txtsst}{txtgray}%
 	\newcommand{\txtst}{txtgreen}%
 	% includes
-	\newcommand{\backgroundfile}{altbackground.pdf}%
+	\newcommand{\backgroundfile}{altbackground.png}%
 	\newcommand{\udescfile}{udescgray.png}%
 	\newcommand{\geofile}{geogray.png}%
+	\newcommand{\petfile}{petgray.png}%
 	% cores footline
 	\newcommand{\footlinecolor}{black}%
 	% ========================
@@ -63,9 +65,10 @@
 	\newcommand{\txtsst}{txtgray}%
 	\newcommand{\txtst}{black}%
 	% includes
-	\newcommand{\backgroundfile}{stdbackground.pdf}%
+	\newcommand{\backgroundfile}{stdbackground.png}%
 	\newcommand{\udescfile}{udescgray.png}%
 	\newcommand{\geofile}{geogray.png}%
+	\newcommand{\petfile}{petgray.png}%
 	% cores footline
 	\newcommand{\footlinecolor}{black}%
 	% ====================
@@ -205,6 +208,92 @@
 		\end{tikzpicture}
 	\end{frame}
 	\setcounter{framenumber}{0}
+}
+
+\newcommand{\sectionframe}[2]{%
+	\begin{frame}[plain]
+		\begin{tikzpicture}[remember picture, overlay]
+			% background
+			\node[anchor=south west, inner sep=0pt] at (current page.south west) {
+				\includegraphics[width=\paperwidth,height=\paperheight]{\backgroundfile}
+			};
+			
+			\fill[mainfill] ([yshift={\vptrem*\paperheight}]current page.south east)
+			rectangle ++({-\hpttil*\paperwidth}, {\vpttil*\paperheight});
+			\node (init) at ([xshift={\hptrem*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\node (end) at ([xshift={\hptrem/2*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\fill[mainfill] ([yshift={0.2}]init.center)
+			arc[start angle=0,end angle=-90,radius=\raio+7.8pt]
+			-- (current page.south east)
+			-- ([yshift={\vptrem*\paperheight+0.2}]current page.south east) -- cycle;
+			
+			\fill[mainfill] ([yshift={-2.69cm}]current page.west)
+			rectangle ++({(\hptrem/2-0.023)*\paperwidth},4.22cm);
+			\fill[mainfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=2.11cm];
+			\fill[secfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=1.85cm];
+			
+			% título do slide
+			\node[anchor=east,align=right,text width=0.55\paperwidth] 
+			at ([xshift=-0.5cm, yshift=-1cm]current page.east) {
+				{\fontsize{16pt}{16pt}\bfseries \textcolor{\txttitle}{#1}} \\[1em]
+				{\fontsize{12pt}{12pt}\bfseries \textcolor{\txtmisc}{#2}} 
+			};
+			
+			\node[align=center,font=\scriptsize,\txtmisc] 
+			at ([xshift=1cm,yshift=0.33cm]current page.south) 
+			{\presentername. \presentationfootline};
+			
+			% número da página (estilo footline)
+			\node[anchor=south east,font=\scriptsize] 
+			at ([xshift=-0.3cm,yshift=0.18cm]current page.south east) 
+			{\insertframenumber};
+		\end{tikzpicture}%
+	\end{frame}
+}
+
+\newcommand{\thanksframe}[3]{%
+	\begin{frame}[plain]
+		\begin{tikzpicture}[remember picture, overlay]
+			% background
+			\node[anchor=south west, inner sep=0pt] at (current page.south west) {
+				\includegraphics[width=\paperwidth,height=\paperheight]{\backgroundfile}
+			};
+			
+			\fill[mainfill] ([yshift={\vptrem*\paperheight}]current page.south east)
+			rectangle ++({-\hpttil*\paperwidth}, {\vpttil*\paperheight});
+			\node (init) at ([xshift={\hptrem*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\node (end) at ([xshift={\hptrem/2*\paperwidth},yshift={\vptrem*\paperheight}]current page.south west) {};
+			\fill[mainfill] ([yshift={0.2}]init.center)
+			arc[start angle=0,end angle=-90,radius=\raio+7.8pt]
+			-- (current page.south east)
+			-- ([yshift={\vptrem*\paperheight+0.2}]current page.south east) -- cycle;
+			
+			\fill[mainfill] ([yshift={-2.69cm}]current page.west)
+			rectangle ++({(\hptrem/2-0.023)*\paperwidth},4.22cm);
+			\fill[mainfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=2.11cm];
+			\fill[secfill] ([xshift=\wrect pt, yshift=\cyrect cm]current page.west) circle[radius=1.85cm];
+			
+			% logos 
+			\node[anchor=east,scale=0.97] at ([xshift=0.45cm, yshift=3cm]current page.east) {
+				\begin{tikzpicture}[remember picture]
+					\node[anchor=west,yshift=-0.05cm] at (-4.38,0) {\includegraphics[width=3.75cm]{\geofile}};
+					\node[anchor=west] at (-1,0) {\includegraphics[width=3cm]{\udescfile}};
+					\node[anchor=west,align=left,scale=0.66,text width=8cm,text=\txtdep,font=\bfseries,yshift=-0.05cm] at (2.2, 0) {\includegraphics[width=7cm]{\petfile}};
+				\end{tikzpicture}
+			};
+			
+			\node[anchor=east,align=right,text width=0.55\paperwidth] 
+			at ([xshift=-0.5cm, yshift=-1cm]current page.east) {
+				{\fontsize{16pt}{16pt}\bfseries \textcolor{\txttitle}{#1}} \\[1.5em]
+				{\fontsize{12pt}{12pt}\bfseries \textcolor{\txtmisc}{#2}} \\[0.1em]
+				{\fontsize{10pt}{10pt}\selectfont \textcolor{\txtmisc}{#3}}
+			};
+			
+			\node[align=center,font=\scriptsize,\txtmisc] 
+			at ([xshift=1cm,yshift=0.33cm]current page.south) 
+			{\presentername. \presentationfootline};
+		\end{tikzpicture}%
+	\end{frame}
 }
 
 
