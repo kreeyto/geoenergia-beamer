@@ -14,6 +14,8 @@
 \usepackage{enumitem}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+
+% incluindo arquivo de referencias
 \addbibresource{references.bib}
 
 % ---------------------- SELETORES -------------------------
@@ -54,12 +56,20 @@
 			
 			Thinking I'd be strong there!
 			
-			Referência aqui\reference{Hegele Jr, L. A., et al. \textbf{Physical Review E} 98.4 (2018).} e aqui\reference{Gemelgo, B. V. et al. \textbf{Galactic Review E} 12.3 (2004).}
+			Referência aqui\reference{montessori2023}{Montessori, A., et al. \textbf{Journal of Computational Science} 74 (2023).} e aqui\reference{he1998}{He, X., et al. \textbf{Physical Review E} 57.1 (1998).}
 		}
 		
 	\end{frame}
 	
-	% exige .bib! 
-	%\printbibliography <--- chamar dentro de um \conteudo{}
+	\begin{frame}
+		
+		\sobretitulo{REFERÊNCIAS}
+		\titulo{REFERÊNCIAS}
+	
+		\conteudo{
+			\printbibliography 
+		}
+		
+	\end{frame}
 	
 \end{document} 
