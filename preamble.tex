@@ -118,11 +118,17 @@
 \newcounter{refstart}
 \gdef\refentries{}
 
-\NewDocumentCommand{\reference}{m}{
+\DeclareCiteCommand{\cite}
+{\unspace} % nada antes
+{\textsuperscript{\printfield{labelnumber}}} % número sobrescrito
+{\multicitedelim} % separador (vírgula etc.)
+{}
+
+\NewDocumentCommand{\reference}{mm}{
 	\hspace{-0.075cm}\stepcounter{refcount}%
 	\edef\tempcounter{\number\value{refcount}}%
-	\g@addto@macro\refentries{\item\hspace{-0.1cm}#1}%
-	$^\tempcounter$%
+	\g@addto@macro\refentries{\item\hspace{-0.1cm}#2}%
+	\cite{#1}%
 }
 
 \let\oldframe\frame

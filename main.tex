@@ -8,13 +8,20 @@
 \usefonttheme[onlymath]{serif}
 \usepackage{mfirstuc}
 \usepackage{xparse}
+\usepackage{bm}
 \usepackage{xstring}
+\usepackage{caption}
 \usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
 
 % ---------------------- SELETORES -------------------------
 \newcommand{\themeid}{1} % 1 = verde, 2 = meio termo, 3 = branco 
 \newcommand{\langid}{en} % 'pt' para português, 'en' para inglês
 % -----------------------------------------------------------
+
+\setitemize[1]{label=$\star$} 
 
 % preambulo
 \input{preamble.tex}
@@ -51,5 +58,8 @@
 		}
 		
 	\end{frame}
+	
+	% exige .bib! 
+	%\printbibliography <--- chamar dentro de um \conteudo{}
 	
 \end{document} 
